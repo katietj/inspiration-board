@@ -7,23 +7,33 @@ import Card from './Card';
 import NewCardForm from './NewCardForm';
 import CARD_DATA from '../data/card-data.json';
 
+const URL = "https://inspiration-board.herokuapp.com/boards/KTJ/cards"
+
 class Board extends Component {
   constructor() {
     super();
 
     this.state = {
-      cards: [],
+      cards: CARD_DATA.cards,
     };
   }
 
   render() {
-    return (
-      <div>
-        Board
-      </div>
-    )
-  }
+    const cards = this.state.cards.map((card, i) =>{
+    return <Card
+          key={i}
+          text={card.text}
+          emoji={card.emoji}
+        />
+      })
 
+
+  return (
+    <div>
+    {cards}
+    </div>
+  )
+}
 }
 
 Board.propTypes = {
