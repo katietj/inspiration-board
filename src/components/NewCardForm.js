@@ -48,7 +48,7 @@ class NewCardForm extends Component {
 
     const emojiList = EMOJI_LIST.map((emojiWord) => {
       return (
-      <option key={emojiWord} value={emojiWord}> {emoji.getUnicode(emojiWord)} </option>
+       <option key="emojiWord"> {emoji.getUnicode(emojiWord)} </option>
     );
   });
   return emojiList
@@ -56,15 +56,15 @@ class NewCardForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} name="new-card-form__form " id="new-card-form" className="new-card-form">
-        <div>
-          <label className="new-card-form__form-label" htmlFor="text-transform">Text</label>
-          <input name="text" placeholder="text" onChange={this.onFormChange} value={this.state.text} />
-        </div>
-        <select name="emoji" onChange={this.onFormChange} value={this.state.emoji}>
+      <form onSubmit={this.onSubmit} name="new-card-form" id="new-card-form" className="new-card-form">
+        <div className="new-card-form__form">
+        <textarea  name="text" className="new-card-form__form-textarea" placeholder="Inspiration goes here!" onChange={this.onFormChange} value={this.state.text} />
+        <label className="new-card-form__form-select">Pick an Emoji</label>
+        <select name="emoji" className="new-card-form__form-select" onChange={this.onFormChange} value={this.state.emoji}>
         {this.makeEmoji()}
         </select>
         <input className="new-card-form__form-button" type="submit" name="submit" value="Add a Card" />
+        </div>
       </form>
     );
   }
