@@ -16,6 +16,7 @@ class Board extends Component {
 
     this.state = {
       cards: [],
+      errorMessage: '',
     };
   }
 
@@ -50,6 +51,24 @@ class Board extends Component {
       })
   }
 
+  addCard = (card) =>{
+    axios.post(URL, card)
+    .then((response)=>{
+      card.id = response.data.card.id
+
+      const { cards} = this.state
+      cards.push(card)
+      this.setState({
+        cards
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      this.setState({
+          errorMessage: `Failure ${error.message}`,
+        })
+    })
+  }
 
   render() {
     const cards = this.state.cards.map((card, i) =>{
@@ -66,6 +85,7 @@ class Board extends Component {
   return (
     <div className="board">
     {cards}
+    <NewCardForm  onAddCardCallback={this.addCard}/>
     </div>
   )
 }
