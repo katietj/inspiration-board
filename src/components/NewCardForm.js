@@ -48,7 +48,7 @@ class NewCardForm extends Component {
 
     const emojiList = EMOJI_LIST.map((emojiWord) => {
       return (
-       <option key="emojiWord"> {emoji.getUnicode(emojiWord)} </option>
+      <option key={emojiWord} value={emojiWord}> {emoji.getUnicode(emojiWord)} </option>
     );
   });
   return emojiList
@@ -59,7 +59,7 @@ class NewCardForm extends Component {
       <form onSubmit={this.onSubmit} name="new-card-form" id="new-card-form" className="new-card-form">
         <div className="new-card-form__form">
         <textarea  name="text" className="new-card-form__form-textarea" placeholder="Inspiration goes here!" onChange={this.onFormChange} value={this.state.text} />
-        <label className="new-card-form__form-select">Pick an Emoji</label>
+        <label className="new-card-form__form-label">Pick an Emoji</label>
         <select name="emoji" className="new-card-form__form-select" onChange={this.onFormChange} value={this.state.emoji}>
         {this.makeEmoji()}
         </select>
