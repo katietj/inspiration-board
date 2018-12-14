@@ -8,6 +8,7 @@ import NewCardForm from './NewCardForm';
 import CARD_DATA from '../data/card-data.json';
 
 const URL = "https://inspiration-board.herokuapp.com/boards/KTJ/cards"
+const deleteURL = "https://inspiration-board.herokuapp.com/cards/"
 
 class Board extends Component {
   constructor() {
@@ -21,12 +22,12 @@ class Board extends Component {
   componentDidMount(){
     axios.get(URL)
     .then((response) => {
-      const cards = response.data.map((info) => {
+      const card = response.data.map((info) => {
 
         return info.card
       })
         this.setState({
-          cards: cards
+          cards: card
         });
       })
       .catch((error) =>{
@@ -38,19 +39,32 @@ class Board extends Component {
     })
   }
 
+  deleteCard = (id) => {
+    axios.delete(`${deleteURL}${id}`)
+      .then((response) => {
+        let cardList  = this.state.cards.filter(element => element.id !== response.data.card.id)
+        this.setState({cards: cardList});
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+
 
   render() {
     const cards = this.state.cards.map((card, i) =>{
     return <Card
           key={i}
+          id={card.id}
           text={card.text}
           emoji={card.emoji}
+          onDeleteCallback={this.deleteCard}
         />
       })
 
 
   return (
-    <div>
+    <div className="board">
     {cards}
     </div>
   )
